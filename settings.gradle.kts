@@ -28,7 +28,10 @@ rootProject.name = "Dadbod Plugins"
 include(":bodbreakhandler")
 include(":bodutils")
 include(":bodmenudebugger")
+
 include(":bodtasktemplate")
+
+include(":bodbarbarian");
 
 
 for (project in rootProject.children) {
