@@ -26,7 +26,7 @@
 version = "1.0.0"
 
 project.extra["PluginName"] = "Bod Barbarian"
-project.extra["PluginDescription"] = "Dadbod - Task Template plugin"
+project.extra["PluginDescription"] = "Bod - Village Barbarian Lifestyle | Cooks and Fishes"
 
 dependencies {
     //compileOnly(group = "com.openosrs.externals", name = "bodutils", version = "1.0.0+") uncomment this is you want to use this in a project that doesn't also hold iUtils

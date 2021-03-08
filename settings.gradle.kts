@@ -29,9 +29,9 @@ include(":bodbreakhandler")
 include(":bodutils")
 include(":bodmenudebugger")
 
-include(":bodtasktemplate")
+include(":bodbarbarian")
 
-include(":bodbarbarian");
+//BOD GENERATOR
 
 
 for (project in rootProject.children) {
