@@ -23,7 +23,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-version = "0.0.1"
+version = "1.0.0"
 
 project.extra["PluginName"] = "Bod Barbarian"
 project.extra["PluginDescription"] = "Dadbod - Task Template plugin"

@@ -12,4 +12,10 @@ public class FireTroutTask extends FindFireTask
 	{
 		return inventory.isFull() && inventory.containsItem(335);
 	}
+
+	@Override
+	public String getTaskDescription()
+	{
+		return "Trout -> Fire";
+	}
 }

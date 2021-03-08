@@ -47,10 +47,4 @@ public abstract class FindFireTask extends Task
 			log.info("BodBarbarian couldn't find a fire.");
 		}
 	}
-
-	@Override
-	public String getTaskDescription()
-	{
-		return "Finding Fire for fish " + fishId;
-	}
 }
