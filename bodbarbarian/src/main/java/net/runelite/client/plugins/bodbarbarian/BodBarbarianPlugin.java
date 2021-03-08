@@ -51,6 +51,8 @@ import net.runelite.client.plugins.bodbarbarian.tasks.CookingTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.DroppingProcessedTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.FindFireTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.FindFishingSpotTask;
+import net.runelite.client.plugins.bodbarbarian.tasks.FireSalmonTask;
+import net.runelite.client.plugins.bodbarbarian.tasks.FireTroutTask;
 import net.runelite.client.plugins.bodbreakhandler.BodBreakHandler;
 import net.runelite.client.plugins.bodbarbarian.tasks.MovingTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.TimeoutTask;
@@ -141,7 +143,8 @@ public class BodBarbarianPlugin extends Plugin
 			injector.getInstance(MovingTask.class),
 			injector.getInstance(AnimatingTask.class),
 			injector.getInstance(CookingTask.class),
-			injector.getInstance(FindFireTask.class),
+			injector.getInstance(FireTroutTask.class),
+			injector.getInstance(FireSalmonTask.class),
 			injector.getInstance(DroppingProcessedTask.class),
 			injector.getInstance(FindFishingSpotTask.class)
 		);

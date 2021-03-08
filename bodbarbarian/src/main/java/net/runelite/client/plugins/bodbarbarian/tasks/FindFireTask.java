@@ -11,8 +11,12 @@ import net.runelite.client.plugins.bodutils.InventoryUtils;
 import net.runelite.client.plugins.bodutils.ObjectUtils;
 
 @Slf4j
-public class FindFireTask extends Task
+public abstract class FindFireTask extends Task
 {
+	public FindFireTask (int fishId) {
+		this.fishId = fishId;
+	}
+
 	@Inject
 	BodUtils bodUtils;
 
@@ -22,11 +26,7 @@ public class FindFireTask extends Task
 	@Inject
 	ObjectUtils object;
 
-	@Override
-	public boolean validate()
-	{
-		return inventory.isFull() && inventory.containsItem(rawFishIds);
-	}
+	int fishId;
 
 	@Override
 	public void onGameTick(GameTick event)
@@ -34,19 +34,15 @@ public class FindFireTask extends Task
 		GameObject fire = object.findNearestGameObjectWithin(client.getLocalPlayer().getWorldLocation(), 10, 26185);
 		if (fire != null) {
 			entry = new MenuEntry("", "", fire.getId(), 1, fire.getSceneMinLocation().getX(), fire.getSceneMaxLocation().getY(), false);
-			rawFishIds.forEach(fishId ->
-
-				bodUtils.doModifiedActionMsTime(
-					entry,
-					fishId,
-					inventory.getWidgetItem(fishId).getIndex(),
-					1,
-					fire.getConvexHull().getBounds(),
-					sleepDelay()
-				));
-
-				tickDelay();
-
+			bodUtils.doModifiedActionMsTime(
+				entry,
+				fishId,
+				inventory.getWidgetItem(fishId).getIndex(),
+				1,
+				fire.getConvexHull().getBounds(),
+				sleepDelay()
+			);
+			tickDelay();
 		} else {
 			log.info("BodBarbarian couldn't find a fire.");
 		}
@@ -55,6 +51,6 @@ public class FindFireTask extends Task
 	@Override
 	public String getTaskDescription()
 	{
-		return "Finding Fire";
+		return "Finding Fire for fish " + fishId;
 	}
 }
