@@ -2,10 +2,7 @@ package net.runelite.client.plugins.bodbarbarian;
 
 import com.google.inject.Injector;
 import com.google.inject.Provides;
-import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +21,10 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.bodbarbarian.tasks.AnimatingTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.CookingTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.DroppingProcessedTask;
-import net.runelite.client.plugins.bodbarbarian.tasks.FindFireTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.FindFishingSpotTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.FireSalmonTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.FireTroutTask;
+import net.runelite.client.plugins.bodbarbarian.tasks.ReturnToVillageTask;
 import net.runelite.client.plugins.bodbreakhandler.BodBreakHandler;
 import net.runelite.client.plugins.bodbarbarian.tasks.MovingTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.TimeoutTask;
@@ -62,9 +59,6 @@ public class BodBarbarianPlugin extends Plugin
 
 	@Inject
 	private BodBarbarianOverlay overlay;
-
-	@Inject
-	private BodUtils utils;
 
 	@Inject
 	public BodBreakHandler bodBreakHandler;
@@ -115,6 +109,7 @@ public class BodBarbarianPlugin extends Plugin
 		tasks.clear();
 		tasks.addAll(
 			injector.getInstance(TimeoutTask.class),
+			injector.getInstance(ReturnToVillageTask.class),
 			injector.getInstance(MovingTask.class),
 			injector.getInstance(AnimatingTask.class),
 			injector.getInstance(CookingTask.class),

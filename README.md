@@ -9,7 +9,7 @@ You will need to add my repository.
 
 **Github Repository owner:** egertaia
 
-**Github Repository name:** bod-plugins
+**Github Repository name:** bod-release
 
 # Credits
 
