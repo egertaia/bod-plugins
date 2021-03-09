@@ -31,18 +31,21 @@ public abstract class FindFireTask extends Task
 	@Override
 	public void onGameTick(GameTick event)
 	{
+
 		GameObject fire = object.findNearestGameObjectWithin(client.getLocalPlayer().getWorldLocation(), 10, 26185);
 		if (fire != null) {
-			entry = new MenuEntry("", "", fire.getId(), 1, fire.getSceneMinLocation().getX(), fire.getSceneMaxLocation().getY(), false);
-			bodUtils.doModifiedActionMsTime(
-				entry,
-				fishId,
-				inventory.getWidgetItem(fishId).getIndex(),
-				1,
-				fire.getConvexHull().getBounds(),
-				sleepDelay()
-			);
-			tickDelay();
+			if (client.getLocalPlayer().getAnimation() == -1) {
+				entry = new MenuEntry("", "", fire.getId(), 1, fire.getSceneMinLocation().getX(), fire.getSceneMaxLocation().getY(), false);
+				bodUtils.doModifiedActionMsTime(
+					entry,
+					fishId,
+					inventory.getWidgetItem(fishId).getIndex(),
+					1,
+					fire.getConvexHull().getBounds(),
+					sleepDelay()
+				);
+				tickDelay();
+			}
 		} else {
 			log.info("BodBarbarian couldn't find a fire.");
 		}
