@@ -29,7 +29,6 @@ class BodBarbarianOverlay extends OverlayPanel
 	private final BodBarbarianConfig config;
 
 	String timeFormat;
-	private String infoStatus = "Starting...";
 
 	@Inject
 	private BodBarbarianOverlay(final Client client, final BodBarbarianPlugin plugin, final BodBarbarianConfig config)

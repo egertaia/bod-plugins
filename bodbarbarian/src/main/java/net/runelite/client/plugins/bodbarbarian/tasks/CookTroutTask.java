@@ -2,15 +2,17 @@ package net.runelite.client.plugins.bodbarbarian.tasks;
 
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.AnimationID;
 import net.runelite.api.GameObject;
 import net.runelite.api.ItemID;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.ObjectID;
 import net.runelite.api.events.GameTick;
+import net.runelite.client.plugins.bodbarbarian.BodBarbarianPlugin;
 import net.runelite.client.plugins.bodbarbarian.Task;
+import net.runelite.client.plugins.bodbarbarian.TimeoutUntil;
 import net.runelite.client.plugins.bodutils.BodUtils;
 import net.runelite.client.plugins.bodutils.InventoryUtils;
-import net.runelite.client.plugins.bodutils.MenuUtils;
 import net.runelite.client.plugins.bodutils.ObjectUtils;
 
 @Slf4j
@@ -45,6 +47,13 @@ public class CookTroutTask extends Task
 				fire.getConvexHull().getBounds(),
 				sleepDelay()
 			);
+
+			BodBarbarianPlugin.conditionTimeout = new TimeoutUntil(
+				() -> !inventory.containsItem(ItemID.RAW_TROUT),
+				() -> client.getLocalPlayer().getAnimation() == AnimationID.COOKING_FIRE,
+				5
+			);
+
 		} else {
 			log.info("BodBarbarian couldn't find a fire.");
 		}

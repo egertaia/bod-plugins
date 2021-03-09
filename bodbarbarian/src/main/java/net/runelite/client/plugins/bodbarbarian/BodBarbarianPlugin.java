@@ -83,6 +83,8 @@ public class BodBarbarianPlugin extends Plugin
 	public static int tickLength;
 	public static int timeout;
 	public static String status = "starting...";
+	public static ConditionTimeout conditionTimeout;
+	public static boolean timeoutFinished;
 
 	@Provides
 	BodBarbarianConfig provideConfig(ConfigManager configManager)
@@ -195,10 +197,30 @@ public class BodBarbarianPlugin extends Plugin
 			{
 				status = task.getTaskDescription();
 				task.onGameTick(event);
+
+				if (timeoutFinished)
+				{
+					if (timeout > 0)
+					{
+						return;
+					}
+				}
+
+				Task newTask = tasks.getValidTask();
+				if (newTask != null)
+				{
+					newTask.onGameTick(event);
+					status = task.getTaskDescription();
+				} else
+				{
+					status = "Idle";
+				}
+
+				timeoutFinished = false;
 			}
 			else
 			{
-				status = "Task not found";
+				status = "Idle";
 				log.debug(status);
 			}
 			beforeLoc = player.getLocalLocation();
