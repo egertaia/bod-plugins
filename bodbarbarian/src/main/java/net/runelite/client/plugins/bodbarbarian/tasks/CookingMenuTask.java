@@ -10,11 +10,8 @@ import net.runelite.client.plugins.bodbarbarian.Task;
 import net.runelite.client.plugins.bodutils.BodUtils;
 
 @Slf4j
-public class CookingTask extends Task
+public class CookingMenuTask extends Task
 {
-	@Inject
-	BodBarbarianPlugin plugin;
-
 	@Inject
 	BodUtils bodUtils;
 
@@ -29,7 +26,6 @@ public class CookingTask extends Task
 	{
 		entry = new MenuEntry("", "", 1, 57, -1, 17694734, false);
 		bodUtils.doActionMsTime(entry, client.getWidget(WidgetID.MULTISKILL_MENU_GROUP_ID, 14).getBounds(), sleepDelay());
-		plugin.timeout = tickDelay();
 	}
 
 	@Override

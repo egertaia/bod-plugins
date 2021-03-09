@@ -19,11 +19,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.bodbarbarian.tasks.AnimatingTask;
-import net.runelite.client.plugins.bodbarbarian.tasks.CookingTask;
+import net.runelite.client.plugins.bodbarbarian.tasks.CookingMenuTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.DroppingProcessedTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.FindFishingSpotTask;
-import net.runelite.client.plugins.bodbarbarian.tasks.FireSalmonTask;
-import net.runelite.client.plugins.bodbarbarian.tasks.FireTroutTask;
+import net.runelite.client.plugins.bodbarbarian.tasks.CookSalmonTask;
+import net.runelite.client.plugins.bodbarbarian.tasks.CookTroutTask;
 import net.runelite.client.plugins.bodbarbarian.tasks.ReturnToVillageTask;
 import net.runelite.client.plugins.bodbreakhandler.BodBreakHandler;
 import net.runelite.client.plugins.bodbarbarian.tasks.MovingTask;
@@ -112,9 +112,9 @@ public class BodBarbarianPlugin extends Plugin
 			injector.getInstance(ReturnToVillageTask.class),
 			injector.getInstance(MovingTask.class),
 			injector.getInstance(AnimatingTask.class),
-			injector.getInstance(CookingTask.class),
-			injector.getInstance(FireTroutTask.class),
-			injector.getInstance(FireSalmonTask.class),
+			injector.getInstance(CookingMenuTask.class),
+			injector.getInstance(CookTroutTask.class),
+			injector.getInstance(CookSalmonTask.class),
 			injector.getInstance(DroppingProcessedTask.class),
 			injector.getInstance(FindFishingSpotTask.class)
 		);
