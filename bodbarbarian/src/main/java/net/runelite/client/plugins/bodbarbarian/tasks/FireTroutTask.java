@@ -1,7 +1,5 @@
 package net.runelite.client.plugins.bodbarbarian.tasks;
 
-import net.runelite.api.Player;
-
 public class FireTroutTask extends FindFireTask
 {
 	public FireTroutTask()
@@ -12,8 +10,7 @@ public class FireTroutTask extends FindFireTask
 	@Override
 	public boolean validate()
 	{
-		Player player = client.getLocalPlayer();
-		return inventory.isFull() && inventory.containsItem(335)  && player.getAnimation() == -1;
+		return inventory.isFull() && inventory.containsItem(335);
 	}
 
 	@Override

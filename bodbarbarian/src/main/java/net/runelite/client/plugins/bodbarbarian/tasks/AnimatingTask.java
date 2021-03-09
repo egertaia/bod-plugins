@@ -1,7 +1,7 @@
 package net.runelite.client.plugins.bodbarbarian.tasks;
 
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.client.plugins.bodbarbarian.BodBarbarianPlugin;
+import net.runelite.api.AnimationID;
 import net.runelite.client.plugins.bodbarbarian.Task;
 
 @Slf4j
@@ -16,7 +16,14 @@ public class AnimatingTask extends Task
 	@Override
 	public String getTaskDescription()
 	{
-		return "Animating";
+		switch(client.getLocalPlayer().getAnimation()) {
+			case AnimationID.FISHING_POLE_CAST:
+				return "Fishing";
+			case AnimationID.COOKING_FIRE:
+				return "Cooking";
+			default:
+				return "?";
+		}
 	}
 
 }

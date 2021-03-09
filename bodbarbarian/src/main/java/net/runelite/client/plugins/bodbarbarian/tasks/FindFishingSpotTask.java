@@ -15,6 +15,9 @@ import net.runelite.client.plugins.bodutils.NPCUtils;
 public class FindFishingSpotTask extends Task
 {
 	@Inject
+	BodBarbarianPlugin plugin;
+
+	@Inject
 	InventoryUtils inventory;
 
 	@Inject
@@ -36,6 +39,8 @@ public class FindFishingSpotTask extends Task
 		if (fishingSpot != null) {
 			entry = new MenuEntry("", "", fishingSpot.getIndex(), 9, 0, 0, false);
 			bodUtils.doActionMsTime(entry, fishingSpot.getConvexHull().getBounds(), sleepDelay());
+			plugin.timeout = tickDelay();
+
 		} else {
 			log.info("BodBarbarian - Fishing spot not found");
 		}
@@ -44,6 +49,6 @@ public class FindFishingSpotTask extends Task
 	@Override
 	public String getTaskDescription()
 	{
-		return "Finding Fishing Spot";
+		return "Fishing Spot?";
 	}
 }

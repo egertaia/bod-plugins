@@ -27,7 +27,7 @@ public class ReturnToVillageTask extends Task
 	@Override
 	public void onGameTick(GameTick event)
 	{
-		walk.webWalk(firePosition, 2, client.getLocalPlayer().isMoving(), sleepDelay());
+		walk.webWalk(firePosition, 1, client.getLocalPlayer().isMoving(), sleepDelay());
 	}
 
 	@Override

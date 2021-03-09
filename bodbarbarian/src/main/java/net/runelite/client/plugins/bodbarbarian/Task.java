@@ -30,7 +30,7 @@ public abstract class Task
 
 	public MenuEntry entry;
 	public final Set<Integer> rawFishIds = Set.of(331,335);
-	public final Set<Integer> processedFIshIds = Set.of(333, 329, 343);
+	public final Set<Integer> processedFishIds = Set.of(333, 329, 343);
 
 	public abstract boolean validate();
 

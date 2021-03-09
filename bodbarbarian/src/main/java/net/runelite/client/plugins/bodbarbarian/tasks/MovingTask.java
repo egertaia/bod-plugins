@@ -23,7 +23,7 @@ public class MovingTask extends Task
 		if (player != null)
 		{
 			playerUtils.handleRun(20, 30);
-			BodBarbarianPlugin.timeout = tickDelay();
+			BodBarbarianPlugin.timeout = 2+ tickDelay();
 		}
 	}
 }
