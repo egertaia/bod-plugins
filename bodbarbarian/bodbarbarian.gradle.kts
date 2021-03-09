@@ -23,7 +23,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-version = "1.0.7"
+version = "1.1.0"
 
 project.extra["PluginName"] = "Bod Barbarian"
 project.extra["PluginDescription"] = "Bod - Village Barbarian Lifestyle | Cooks and Fishes"
