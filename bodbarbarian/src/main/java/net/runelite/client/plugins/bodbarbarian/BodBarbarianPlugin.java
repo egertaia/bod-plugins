@@ -204,19 +204,19 @@ public class BodBarbarianPlugin extends Plugin
 					{
 						return;
 					}
-				}
 
-				Task newTask = tasks.getValidTask();
-				if (newTask != null)
-				{
-					newTask.onGameTick(event);
-					status = task.getTaskDescription();
-				} else
-				{
-					status = "Idle";
-				}
+					Task newTask = tasks.getValidTask();
+					if (newTask != null)
+					{
+						newTask.onGameTick(event);
+						status = task.getTaskDescription();
+					} else
+					{
+						status = "Idle";
+					}
 
-				timeoutFinished = false;
+					timeoutFinished = false;
+				}
 			}
 			else
 			{
