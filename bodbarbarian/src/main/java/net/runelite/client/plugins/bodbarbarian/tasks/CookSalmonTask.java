@@ -39,8 +39,8 @@ public class CookSalmonTask extends Task
 			entry = new MenuEntry("", "", fire.getId(), 1, fire.getSceneMinLocation().getX(), fire.getSceneMaxLocation().getY(), false);
 			bodUtils.doModifiedActionMsTime(
 				entry,
-				ItemID.SALMON,
-				inventory.getWidgetItem(ItemID.SALMON).getIndex(),
+				ItemID.RAW_SALMON,
+				inventory.getWidgetItem(ItemID.RAW_SALMON).getIndex(),
 				1,
 				fire.getConvexHull().getBounds(),
 				sleepDelay()

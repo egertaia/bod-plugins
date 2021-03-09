@@ -8,12 +8,19 @@ import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.plugins.bodbarbarian.BodBarbarianPlugin;
 import net.runelite.client.plugins.bodbarbarian.Task;
 import net.runelite.client.plugins.bodutils.BodUtils;
+import net.runelite.client.plugins.bodutils.MenuUtils;
 
 @Slf4j
 public class CookingMenuTask extends Task
 {
 	@Inject
+	BodBarbarianPlugin plugin;
+
+	@Inject
 	BodUtils bodUtils;
+
+	@Inject
+	MenuUtils menu;
 
 	@Override
 	public boolean validate()
@@ -25,6 +32,7 @@ public class CookingMenuTask extends Task
 	public void onGameTick(GameTick event)
 	{
 		entry = new MenuEntry("", "", 1, 57, -1, 17694734, false);
+		menu.setEntry(entry);
 		bodUtils.doActionMsTime(entry, client.getWidget(WidgetID.MULTISKILL_MENU_GROUP_ID, 14).getBounds(), sleepDelay());
 	}
 
