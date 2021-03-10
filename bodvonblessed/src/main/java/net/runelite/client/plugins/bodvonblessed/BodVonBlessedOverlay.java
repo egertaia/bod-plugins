@@ -29,7 +29,6 @@ class BodVonBlessedOverlay extends OverlayPanel
     private final BodVonBlessedConfig config;
 
     String timeFormat;
-    private String infoStatus = "Starting...";
 
     @Inject
     private BodVonBlessedOverlay(final Client client, final BodVonBlessedPlugin plugin, final BodVonBlessedConfig config)
@@ -73,7 +72,7 @@ class BodVonBlessedOverlay extends OverlayPanel
             panelComponent.setPreferredSize(new Dimension(270, 200));
             panelComponent.setBorder(new Rectangle(5, 5, 5, 5));
             panelComponent.getChildren().add(TitleComponent.builder()
-                .text("BodVonBlessed 0.0.1")
+                .text("BodVonBlessed")
                 .color(ColorUtil.fromHex("#40C4FF"))
                 .build());
             panelComponent.getChildren().add(tableComponent);

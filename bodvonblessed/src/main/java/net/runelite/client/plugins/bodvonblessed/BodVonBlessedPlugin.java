@@ -114,7 +114,7 @@ public class BodVonBlessedPlugin extends Plugin
 
     public void resetVals()
     {
-        log.debug("stopping Task Template plugin");
+        log.debug("stopping Bod Von Blessed");
         overlayManager.remove(overlay);
         bodBreakHandler.stopPlugin(this);
         startBot = false;
@@ -125,7 +125,7 @@ public class BodVonBlessedPlugin extends Plugin
     @Subscribe
     private void onConfigButtonPressed(ConfigButtonClicked configButtonClicked)
     {
-        if (!configButtonClicked.getGroup().equalsIgnoreCase("iTaskTemplate"))
+        if (!configButtonClicked.getGroup().equalsIgnoreCase("BodVonBlessed"))
         {
             return;
         }
@@ -137,7 +137,7 @@ public class BodVonBlessedPlugin extends Plugin
                 Player player = client.getLocalPlayer();
                 if (client != null && player != null && client.getGameState() == GameState.LOGGED_IN)
                 {
-                    log.info("starting Task Template plugin");
+                    log.info("starting BodVonBlessed plugin");
                     loadTasks();
                     startBot = true;
                     bodBreakHandler.startPlugin(this);
