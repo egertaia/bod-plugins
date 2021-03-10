@@ -1,5 +1,5 @@
 
-version = "0.1.0"
+version = "0.1.1"
 
 project.extra["PluginName"] = "Bod Von Godblessed"
 project.extra["PluginDescription"] = "Otto Godblessed knows the secrets of barbarian fishing - now you will too."

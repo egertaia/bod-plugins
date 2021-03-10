@@ -36,7 +36,7 @@ public class FindFishingSpotTask extends Task
 		var fishingSpot = npcUtils.findNearestNpcWithin(client.getLocalPlayer().getWorldLocation(), 20, Collections.singleton(NpcID.FISHING_SPOT_1542));
 		if (fishingSpot != null) {
 			entry = new MenuEntry("", "", fishingSpot.getIndex(), 9, 0, 0, false);
-			bodUtils.doActionMsTime(entry, fishingSpot.getConvexHull().getBounds(), sleepDelay());
+			bodUtils.doInvokeClientTick(entry, sleepDelay());
 			BodVonBlessedPlugin.timeout = tickDelay();
 
 		} else {
