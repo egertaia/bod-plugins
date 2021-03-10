@@ -30,6 +30,7 @@ include(":bodutils")
 include(":bodmenudebugger")
 
 include(":bodbarbarian")
+include(":bodvonblessed")
 
 //BOD GENERATOR
 
