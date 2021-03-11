@@ -32,10 +32,10 @@ import org.pf4j.Extension;
 @Extension
 @PluginDependency(BodUtils.class)
 @PluginDescriptor(
-    name = "BodVonBlessed",
+    name = "Bod bon Godblessed",
     enabledByDefault = false,
-    description = "BodVonBlessed plugin",
-    tags = {"bod", "task", "template", "bot"}
+    description = "Bod von Godblessed plugin",
+    tags = {"bod", "fishing", "barbarian", "bot"}
 )
 @Slf4j
 public class BodVonBlessedPlugin extends Plugin

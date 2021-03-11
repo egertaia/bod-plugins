@@ -193,8 +193,8 @@ public interface BodVonBlessedConfig extends Config
         name = "",
         description = "Instructions. Don't enter anything into this field",
         position = 1,
-        title = "instructionsTitle"
-    )
+		section = "instructionsTitle"
+	)
     default String instructions()
     {
         return "Bod von Blessed - a barbarian fisher that gets some fish and then drops it. \n In future you might be able to 3t.";
