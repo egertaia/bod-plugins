@@ -30,14 +30,13 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
-import net.runelite.client.config.ConfigTitle;
 import net.runelite.client.config.Range;
 
 @ConfigGroup("BodBarbarian")
 public interface BodBarbarianConfig extends Config
 {
 
-	@ConfigSection	(
+	@ConfigSection(
 		keyName = "delayConfig",
 		name = "Sleep Delay Configuration",
 		description = "Configure how the bot handles sleep delays",
