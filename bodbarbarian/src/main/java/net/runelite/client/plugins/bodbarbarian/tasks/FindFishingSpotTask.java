@@ -15,9 +15,6 @@ import net.runelite.client.plugins.bodutils.NPCUtils;
 public class FindFishingSpotTask extends Task
 {
 	@Inject
-	BodBarbarianPlugin plugin;
-
-	@Inject
 	InventoryUtils inventory;
 
 	@Inject
@@ -38,8 +35,8 @@ public class FindFishingSpotTask extends Task
 		var fishingSpot = npcUtils.findNearestNpcWithin(client.getLocalPlayer().getWorldLocation(), 10, Collections.singleton(1526));
 		if (fishingSpot != null) {
 			entry = new MenuEntry("", "", fishingSpot.getIndex(), 9, 0, 0, false);
-			bodUtils.doActionMsTime(entry, fishingSpot.getConvexHull().getBounds(), sleepDelay());
-			plugin.timeout = tickDelay();
+			bodUtils.doInvokeClientTick(entry, sleepDelay());
+			BodBarbarianPlugin.timeout = tickDelay();
 
 		} else {
 			log.info("BodBarbarian - Fishing spot not found");

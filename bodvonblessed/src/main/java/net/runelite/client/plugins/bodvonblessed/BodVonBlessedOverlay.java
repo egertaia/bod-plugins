@@ -1,5 +1,6 @@
 package net.runelite.client.plugins.bodvonblessed;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -53,39 +54,19 @@ class BodVonBlessedOverlay extends OverlayPanel
 
         Duration duration = Duration.between(plugin.botTimer, Instant.now());
         timeFormat = (duration.toHours() < 1) ? "mm:ss" : "HH:mm:ss";
-        tableComponent.addRow("Time running:", formatDuration(duration.toMillis(), timeFormat));
-
+        tableComponent.addRow("Time:", formatDuration(duration.toMillis(), timeFormat));
         tableComponent.addRow("Status:", plugin.status);
-
-        TableComponent tableStatsComponent = new TableComponent();
-        tableStatsComponent.setColumnAlignments(TableAlignment.LEFT, TableAlignment.RIGHT);
-
-        TableComponent tableDelayComponent = new TableComponent();
-        tableDelayComponent.setColumnAlignments(TableAlignment.LEFT, TableAlignment.RIGHT);
-
-        tableDelayComponent.addRow("Sleep delay:", BodVonBlessedPlugin.sleepLength + "ms");
-        tableDelayComponent.addRow("Tick delay:", String.valueOf(plugin.timeout));
 
         if (!tableComponent.isEmpty())
         {
-            panelComponent.setBackgroundColor(ColorUtil.fromHex("#121212")); //Material Dark default
-            panelComponent.setPreferredSize(new Dimension(270, 200));
+            panelComponent.setBackgroundColor(new Color(70, 61, 50, 156)); //Material Dark default
+            panelComponent.setPreferredSize(new Dimension(150, 100));
             panelComponent.setBorder(new Rectangle(5, 5, 5, 5));
             panelComponent.getChildren().add(TitleComponent.builder()
-                .text("BodVonBlessed")
+                .text("Bod von Blessed")
                 .color(ColorUtil.fromHex("#40C4FF"))
                 .build());
             panelComponent.getChildren().add(tableComponent);
-            panelComponent.getChildren().add(TitleComponent.builder()
-                .text("Stats")
-                .color(ColorUtil.fromHex("#FFA000"))
-                .build());
-            panelComponent.getChildren().add(tableStatsComponent);
-            panelComponent.getChildren().add(TitleComponent.builder()
-                .text("Delays")
-                .color(ColorUtil.fromHex("#F8BBD0"))
-                .build());
-            panelComponent.getChildren().add(tableDelayComponent);
         }
         return super.render(graphics);
     }

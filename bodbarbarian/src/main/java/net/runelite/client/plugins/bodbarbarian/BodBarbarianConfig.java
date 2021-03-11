@@ -29,6 +29,7 @@ import net.runelite.client.config.Button;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.ConfigSection;
 import net.runelite.client.config.ConfigTitle;
 import net.runelite.client.config.Range;
 
@@ -36,11 +37,11 @@ import net.runelite.client.config.Range;
 public interface BodBarbarianConfig extends Config
 {
 
-	@ConfigTitle(
+	@ConfigSection	(
 		keyName = "delayConfig",
 		name = "Sleep Delay Configuration",
 		description = "Configure how the bot handles sleep delays",
-		position = 0
+		position = 2
 	)
 	String delayConfig = "delayConfig";
 
@@ -52,7 +53,7 @@ public interface BodBarbarianConfig extends Config
 		keyName = "sleepMin",
 		name = "Sleep Min",
 		description = "",
-		position = 1,
+		position = 3,
 		section = "delayConfig"
 	)
 	default int sleepMin()
@@ -68,7 +69,7 @@ public interface BodBarbarianConfig extends Config
 		keyName = "sleepMax",
 		name = "Sleep Max",
 		description = "",
-		position = 2,
+		position = 4,
 		section = "delayConfig"
 	)
 	default int sleepMax()
@@ -84,7 +85,7 @@ public interface BodBarbarianConfig extends Config
 		keyName = "sleepTarget",
 		name = "Sleep Target",
 		description = "",
-		position = 3,
+		position = 5,
 		section = "delayConfig"
 	)
 	default int sleepTarget()
@@ -100,7 +101,7 @@ public interface BodBarbarianConfig extends Config
 		keyName = "sleepDeviation",
 		name = "Sleep Deviation",
 		description = "",
-		position = 4,
+		position = 6,
 		section = "delayConfig"
 	)
 	default int sleepDeviation()
@@ -112,7 +113,7 @@ public interface BodBarbarianConfig extends Config
 		keyName = "sleepWeightedDistribution",
 		name = "Sleep Weighted Distribution",
 		description = "Shifts the random distribution towards the lower end at the target, otherwise it will be an even distribution",
-		position = 5,
+		position = 7,
 		section = "delayConfig"
 	)
 	default boolean sleepWeightedDistribution()
@@ -120,7 +121,7 @@ public interface BodBarbarianConfig extends Config
 		return false;
 	}
 
-	@ConfigTitle(
+	@ConfigSection(
 		keyName = "delayTickConfig",
 		name = "Game Tick Configuration",
 		description = "Configure how the bot handles game tick delays, 1 game tick equates to roughly 600ms",
@@ -204,11 +205,11 @@ public interface BodBarbarianConfig extends Config
 		return false;
 	}
 
-	@ConfigTitle(
+	@ConfigSection(
 		keyName = "instructionsTitle",
 		name = "Instructions",
 		description = "",
-		position = 16
+		position = 0
 	)
 	String instructionsTitle = "instructionsTitle";
 
@@ -216,12 +217,12 @@ public interface BodBarbarianConfig extends Config
 		keyName = "instructions",
 		name = "",
 		description = "Instructions. Don't enter anything into this field",
-		position = 17,
+		position = 1,
 		title = "instructionsTitle"
 	)
 	default String instructions()
 	{
-		return "Bod Barbarian. Fishes and cooks at the barbarian village.";
+		return "Bod-Barbarian Village Manager.\nCatches fish and cooks at the barbarian village, after which it throws the fish down.";
 	}
 
 	@ConfigItem(
