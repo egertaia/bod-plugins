@@ -35,7 +35,7 @@ class BodBarbarianOverlay extends OverlayPanel
 	private BodBarbarianOverlay(final Client client, final BodBarbarianPlugin plugin, final BodBarbarianConfig config)
 	{
 		super(plugin);
-		setPosition(OverlayPosition.BOTTOM_LEFT);
+		setPosition(OverlayPosition.BOTTOM_RIGHT);
 		this.client = client;
 		this.plugin = plugin;
 		this.config = config;
