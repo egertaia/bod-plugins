@@ -1,5 +1,7 @@
 package net.runelite.client.plugins.bodbreakhandler.ui;
 
+import java.time.Instant;
+import javax.swing.JButton;
 import net.runelite.client.plugins.bodbreakhandler.BodBreakHandler;
 import net.runelite.client.plugins.bodbreakhandler.BodBreakHandlerPlugin;
 import net.runelite.client.plugins.bodbreakhandler.ui.utils.JMultilineLabel;
@@ -166,6 +168,7 @@ public class BodBreakHandlerPanel extends PluginPanel
 
 		JLabel title = new JLabel();
 		JLabel help = new JLabel(HELP_ICON);
+		JButton scheduleBreakButton = new JButton("Go on a break");
 
 		title.setText("Bod break handler");
 		title.setForeground(Color.WHITE);
@@ -203,8 +206,18 @@ public class BodBreakHandlerPanel extends PluginPanel
 		titlePanel.add(title, BorderLayout.WEST);
 		titlePanel.add(help, BorderLayout.EAST);
 
+		Set<Plugin> activePlugins = bodBreakHandler.getActivePlugins();
+
+		if (activePlugins.size() > 0) {
+			scheduleBreakButton.addActionListener(e -> activePlugins.forEach(plugin -> bodBreakHandler.planBreak(plugin, Instant.now())));
+
+			titlePanel.add(scheduleBreakButton, BorderLayout.SOUTH);
+			scheduleBreakButton.setBorder(new EmptyBorder(3,3,3,3));
+		}
+
 		return titlePanel;
 	}
+
 
 	private boolean unlockAccountsPanel()
 	{
