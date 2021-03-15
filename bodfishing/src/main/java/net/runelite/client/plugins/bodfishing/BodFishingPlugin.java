@@ -2,16 +2,19 @@ package net.runelite.client.plugins.bodfishing;
 
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import java.time.Duration;
 import java.time.Instant;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
+import net.runelite.api.Skill;
 import net.runelite.api.events.ConfigButtonClicked;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.XpDropEvent;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.bodfishing.enums.FishingChoice;
@@ -46,7 +49,7 @@ public class BodFishingPlugin extends PScript
 	public FishingChoice fishingChoice = FishingChoice.BARBARIAN_OUTPOST;
 	public boolean bankFishChoice = false;
 	public int caughtFish = 0;
-	public int caughtFishPerHour = 0;
+	public long caughtFishPerHour = 0;
 
 	private StateSet<BodFishingPlugin> states = new StateSet<>();
 	State<BodFishingPlugin> currentState;
@@ -161,6 +164,14 @@ public class BodFishingPlugin extends PScript
 
 	}
 
+	@Subscribe
+	private void onXpDropEvent(XpDropEvent event) {
+		if (event.getSkill() == Skill.FISHING) {
+			caughtFish++;
+			caughtFishPerHour = getPerHour(caughtFish);
+		}
+	}
+
 	@Override
 	protected void loop()
 	{
@@ -178,5 +189,15 @@ public class BodFishingPlugin extends PScript
 		} else {
 			setStatus("?");
 		}
+	}
+
+	public long getPerHour(int quantity)
+	{
+		Duration timeSinceStart = Duration.between(startedTimestamp, Instant.now());
+		if (!timeSinceStart.isZero())
+		{
+			return (int) ((double) quantity * (double) Duration.ofHours(1).toMillis() / (double) timeSinceStart.toMillis());
+		}
+		return 0;
 	}
 }

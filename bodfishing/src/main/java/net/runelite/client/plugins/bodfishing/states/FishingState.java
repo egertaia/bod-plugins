@@ -53,7 +53,7 @@ public class FishingState extends State<BodFishingPlugin>
 					PUtils.sleepNormal(650, 800);
 					if (plugin.fishingChoice == FishingChoice.BARBARIAN_OUTPOST)
 					{
-						PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping"));
+						PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping "));
 						PInteraction.item(dropFish, "Drop");
 						PUtils.sleepNormal(100, 200);
 					}
@@ -69,7 +69,7 @@ public class FishingState extends State<BodFishingPlugin>
 							}
 							break;
 						case TEAK_KNIFE:
-							PItem log = PInventory.findItem(Filters.Items.nameEquals("Teak log"));
+							PItem log = PInventory.findItem(Filters.Items.nameEquals("Teak logs"));
 							PItem knife = PInventory.findItem(Filters.Items.nameEquals("Knife"));
 							if (!PInteraction.useItemOnItem(log, knife))
 							{
