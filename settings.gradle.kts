@@ -31,6 +31,7 @@ include(":bodmenudebugger")
 
 include(":bodbarbarian")
 include(":bodvonblessed")
+include(":bodfishing")
 
 //BOD GENERATOR
 
