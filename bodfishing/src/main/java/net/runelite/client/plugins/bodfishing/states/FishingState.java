@@ -42,10 +42,8 @@ public class FishingState extends State<BodFishingPlugin>
 			return;
 		}
 
-		// If we are doing the fishing animation here, animation cancel
 		if (event.getActor().getAnimation() == AnimationID.FISHING_POLE_CAST)
 		{
-
 			if (plugin.enableTickManipulation)
 			{
 				tickManipulationThread.submit(() ->
@@ -58,23 +56,25 @@ public class FishingState extends State<BodFishingPlugin>
 						PUtils.sleepNormal(100, 200);
 					}
 
+					String firstItem = "";
+					String secondItem = "";
 					switch (plugin.tickManipulation)
 					{
 						case GUAM_TAR:
-							PItem tar = PInventory.findItem(Filters.Items.nameEquals("Swamp tar"));
-							PItem herb = PInventory.findItem(Filters.Items.nameContains("Guam leaf"));
-							if (!PInteraction.useItemOnItem(tar, herb))
-							{
-								PUtils.sendGameMessage("Unable to make guam tar");
-							}
+							firstItem = "Swamp tar";
+							secondItem = "Guam leaf";
 							break;
 						case TEAK_KNIFE:
-							PItem log = PInventory.findItem(Filters.Items.nameEquals("Teak logs"));
-							PItem knife = PInventory.findItem(Filters.Items.nameEquals("Knife"));
-							if (!PInteraction.useItemOnItem(log, knife))
-							{
-								PUtils.sendGameMessage("Unable to cut teak log");
-							}
+							firstItem = "Knife";
+							secondItem = "Teak logs";
+							break;
+					}
+
+					PItem item1 = PInventory.findItem(Filters.Items.nameEquals(firstItem));
+					PItem item2 = PInventory.findItem(Filters.Items.nameContains(secondItem));
+					if (!PInteraction.useItemOnItem(item1, item2))
+					{
+						PUtils.sendGameMessage(String.format("Unable to use %s on %s", item1, item2));
 					}
 
 					setFishActionFinished(true);
@@ -104,31 +104,26 @@ public class FishingState extends State<BodFishingPlugin>
 			return;
 		}
 
-		NPC fishingSpot;
-
-		switch (plugin.fishingChoice) {
+		String actionName = "";
+		switch (plugin.fishingChoice)
+		{
 			case BARBARIAN_OUTPOST:
-				fishingSpot = PObjects.findNPC(Filters.NPCs.actionsContains("Use-rod")
-					.and(n -> n.getWorldLocation().distanceTo2D(PPlayer.getWorldLocation()) < 20));
-
-				if (!PInteraction.npc(fishingSpot, "Use-rod"))
-				{
-					PUtils.sendGameMessage("Unable to find fishing spot");
-				}
+				actionName = "Use-rod";
 				break;
 			case BARBARIAN_VILLAGE:
-				fishingSpot = PObjects.findNPC(Filters.NPCs.actionsContains("Lure")
-					.and(n -> n.getWorldLocation().distanceTo2D(PPlayer.getWorldLocation()) < 20));
-
-				if (!PInteraction.npc(fishingSpot, "Lure"))
-				{
-					PUtils.sendGameMessage("Unable to find fishing spot");
-				}
+				actionName = "Lure";
 				break;
 		}
 
-		setFishActionFinished(false);
+		NPC fishingSpot = PObjects.findNPC(Filters.NPCs.actionsContains(actionName)
+			.and(n -> n.getWorldLocation().distanceTo2D(PPlayer.getWorldLocation()) < 20));
 
+		if (!PInteraction.npc(fishingSpot, actionName))
+		{
+			PUtils.sendGameMessage("Unable to find fishing spot");
+		}
+
+		setFishActionFinished(false);
 		PUtils.waitCondition((int) PUtils.randomNormal(7000, 10000), this::isFishActionFinished);
 		setFishActionFinished(true);
 
