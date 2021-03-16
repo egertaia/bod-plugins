@@ -1,5 +1,6 @@
 package net.runelite.client.plugins.bodfishing.states;
 
+import net.runelite.api.events.AnimationChanged;
 import net.runelite.client.plugins.bodfishing.BodFishingPlugin;
 import net.runelite.client.plugins.paistisuite.api.PInventory;
 
@@ -27,6 +28,12 @@ public class ProcessItemState extends State<BodFishingPlugin>
 
 	@Override
 	public void loop()
+	{
+
+	}
+
+	@Override
+	public void onAnimationChanged(AnimationChanged event)
 	{
 
 	}

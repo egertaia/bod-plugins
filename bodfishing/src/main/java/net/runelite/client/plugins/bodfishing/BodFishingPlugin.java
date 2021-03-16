@@ -10,10 +10,12 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
 import net.runelite.api.Skill;
+import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ConfigButtonClicked;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.XpDropEvent;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -109,7 +111,8 @@ public class BodFishingPlugin extends PScript
 		bankFishChoice = config.bankFishChoice();
 	}
 
-	private synchronized void loadStates() {
+	private synchronized void loadStates()
+	{
 		states.clear();
 		states.addAll(
 			this.fishingState
@@ -132,6 +135,16 @@ public class BodFishingPlugin extends PScript
 	{
 		PUtils.sendGameMessage("BodFishing stopped!");
 		startedTimestamp = null;
+	}
+
+	@Subscribe
+	private synchronized void onConfigChanged(ConfigChanged event)
+	{
+		if (!event.getGroup().equalsIgnoreCase("BodFishing"))
+		{
+			return;
+		}
+		readConfig();
 	}
 
 	@Subscribe
@@ -166,8 +179,10 @@ public class BodFishingPlugin extends PScript
 	}
 
 	@Subscribe
-	private synchronized void onXpDropEvent(XpDropEvent event) {
-		if (event.getSkill() == Skill.FISHING) {
+	private synchronized void onXpDropEvent(XpDropEvent event)
+	{
+		if (event.getSkill() == Skill.FISHING)
+		{
 			//TODO: Fix this, it gives triple the fish rn.
 			caughtFish++;
 			caughtFishPerHour = getPerHour(caughtFish);
@@ -178,28 +193,54 @@ public class BodFishingPlugin extends PScript
 	protected void loop()
 	{
 		PUtils.sleepFlat(50, 150);
-		if (PUtils.getClient().getGameState() != GameState.LOGGED_IN) return;
-		if (isStopRequested()) return;
-		State prevState = currentState;
-		currentState = states.getValidState();
-		if (currentState != null) {
-			if (prevState != currentState) {
-				log.info("Entered state => " + currentState.getName());
-			}
-			setStatus(currentState.getName());
-			currentState.loop();
-		} else {
-			setStatus("?");
+		if (PUtils.getClient().getGameState() != GameState.LOGGED_IN)
+		{
+			return;
 		}
+		if (isStopRequested())
+		{
+			return;
+		}
+		updateState();
+		currentState.loop();
 	}
 
 	public long getPerHour(int quantity)
 	{
-		Duration timeSinceStart = Duration.between(startedTimestamp, Instant.now());
-		if (!timeSinceStart.isZero())
-		{
-			return (int) ((double) quantity * (double) Duration.ofHours(1).toMillis() / (double) timeSinceStart.toMillis());
+		if (startedTimestamp != null) {
+			Duration timeSinceStart = Duration.between(startedTimestamp, Instant.now());
+			if (!timeSinceStart.isZero())
+			{
+				return (int) ((double) quantity * (double) Duration.ofHours(1).toMillis() / (double) timeSinceStart.toMillis());
+			}
 		}
 		return 0;
 	}
+
+	@Subscribe
+	protected void onAnimationChanged(AnimationChanged event)
+	{
+		if (!event.getActor().equals(PPlayer.get()))
+		{
+			return;
+		}
+		updateState();
+		if (currentState != null) {
+			currentState.onAnimationChanged(event);
+			log.info("on anim change @ main");
+		}
+	}
+
+	private void updateState() {
+		currentState = states.getValidState();
+		if (currentState != null)
+		{
+			setStatus(currentState.getName());
+		}
+		else
+		{
+			setStatus("?");
+		}
+	}
+
 }

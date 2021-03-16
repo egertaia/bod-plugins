@@ -3,6 +3,7 @@ package net.runelite.client.plugins.bodfishing.states;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.AnimationID;
 import net.runelite.api.NPC;
 import net.runelite.api.events.AnimationChanged;
@@ -17,6 +18,7 @@ import net.runelite.client.plugins.paistisuite.api.PUtils;
 import net.runelite.client.plugins.paistisuite.api.types.Filters;
 import net.runelite.client.plugins.paistisuite.api.types.PItem;
 
+@Slf4j
 public class FishingState extends State<BodFishingPlugin>
 {
 	BodFishingPlugin plugin;
@@ -30,13 +32,10 @@ public class FishingState extends State<BodFishingPlugin>
 		this.plugin = plugin;
 	}
 
-	@Subscribe
-	protected void onAnimationChanged(AnimationChanged event)
+	@Override
+	public void onAnimationChanged(AnimationChanged event)
 	{
-		if (!event.getActor().equals(PPlayer.get()))
-		{
-			return;
-		}
+		log.info("on anim change @ fishstate");
 		if (isFishActionFinished())
 		{
 			return;
@@ -67,7 +66,7 @@ public class FishingState extends State<BodFishingPlugin>
 							}
 							break;
 						case TEAK_KNIFE:
-							PItem log = PInventory.findItem(Filters.Items.nameEquals("Teak log"));
+							PItem log = PInventory.findItem(Filters.Items.nameEquals("Teak logs"));
 							PItem knife = PInventory.findItem(Filters.Items.nameEquals("Knife"));
 							if (!PInteraction.useItemOnItem(log, knife))
 							{
@@ -113,17 +112,21 @@ public class FishingState extends State<BodFishingPlugin>
 				break;
 		}
 
-		NPC fishingSpot = PObjects.findNPC(Filters.NPCs.actionsContains(actionName)
-			.and(n -> n.getWorldLocation().distanceTo2D(PPlayer.getWorldLocation()) < 20));
+		if (plugin.enableTickManipulation || isFishActionFinished()) {
+			NPC fishingSpot = PObjects.findNPC(Filters.NPCs.actionsContains(actionName)
+				.and(n -> n.getWorldLocation().distanceTo2D(PPlayer.getWorldLocation()) < 20));
 
-		if (!PInteraction.npc(fishingSpot, actionName))
-		{
-			PUtils.sendGameMessage("Unable to find fishing spot");
+			if (!PInteraction.npc(fishingSpot, actionName))
+			{
+				PUtils.sendGameMessage("Unable to find fishing spot");
+			}
 		}
 
 		setFishActionFinished(false);
-		PUtils.waitCondition((int) PUtils.randomNormal(7000, 10000), this::isFishActionFinished);
-		setFishActionFinished(true);
+		PUtils.waitCondition((int) PUtils.randomNormal(3600, 5000), this::isFishActionFinished);
+		if (PPlayer.get().getAnimation() == AnimationID.IDLE || plugin.enableTickManipulation) {
+			setFishActionFinished(true);
+		}
 
 		//should 3t soon
 		if (plugin.enableTickManipulation)
