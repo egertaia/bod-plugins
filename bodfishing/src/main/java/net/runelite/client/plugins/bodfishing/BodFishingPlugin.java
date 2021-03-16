@@ -131,6 +131,7 @@ public class BodFishingPlugin extends PScript
 	protected synchronized void onStop()
 	{
 		PUtils.sendGameMessage("BodFishing stopped!");
+		startedTimestamp = null;
 	}
 
 	@Subscribe
@@ -165,8 +166,9 @@ public class BodFishingPlugin extends PScript
 	}
 
 	@Subscribe
-	private void onXpDropEvent(XpDropEvent event) {
+	private synchronized void onXpDropEvent(XpDropEvent event) {
 		if (event.getSkill() == Skill.FISHING) {
+			//TODO: Fix this, it gives triple the fish rn.
 			caughtFish++;
 			caughtFishPerHour = getPerHour(caughtFish);
 		}

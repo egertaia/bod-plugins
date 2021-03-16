@@ -56,25 +56,23 @@ public class FishingState extends State<BodFishingPlugin>
 						PUtils.sleepNormal(100, 200);
 					}
 
-					String firstItem = "";
-					String secondItem = "";
 					switch (plugin.tickManipulation)
 					{
 						case GUAM_TAR:
-							firstItem = "Swamp tar";
-							secondItem = "Guam leaf";
+							PItem tar = PInventory.findItem(Filters.Items.nameEquals("Swamp tar"));
+							PItem herb = PInventory.findItem(Filters.Items.nameContains("Guam leaf"));
+							if (!PInteraction.useItemOnItem(tar, herb))
+							{
+								PUtils.sendGameMessage("Unable to make guam tar");
+							}
 							break;
 						case TEAK_KNIFE:
-							firstItem = "Knife";
-							secondItem = "Teak logs";
-							break;
-					}
-
-					PItem item1 = PInventory.findItem(Filters.Items.nameEquals(firstItem));
-					PItem item2 = PInventory.findItem(Filters.Items.nameContains(secondItem));
-					if (!PInteraction.useItemOnItem(item1, item2))
-					{
-						PUtils.sendGameMessage(String.format("Unable to use %s on %s", item1, item2));
+							PItem log = PInventory.findItem(Filters.Items.nameEquals("Teak log"));
+							PItem knife = PInventory.findItem(Filters.Items.nameEquals("Knife"));
+							if (!PInteraction.useItemOnItem(log, knife))
+							{
+								PUtils.sendGameMessage("Unable to cut teak log");
+							}
 					}
 
 					setFishActionFinished(true);
