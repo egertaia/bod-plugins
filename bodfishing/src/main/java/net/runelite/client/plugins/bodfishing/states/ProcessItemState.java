@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameObject;
+import net.runelite.api.ItemID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.AnimationChanged;
@@ -15,6 +16,7 @@ import net.runelite.client.plugins.paistisuite.api.PObjects;
 import net.runelite.client.plugins.paistisuite.api.PUtils;
 import net.runelite.client.plugins.paistisuite.api.WebWalker.api_lib.DaxWalker;
 import net.runelite.client.plugins.paistisuite.api.WebWalker.api_lib.models.RunescapeBank;
+import net.runelite.client.plugins.paistisuite.api.WebWalker.wrappers.Keyboard;
 import net.runelite.client.plugins.paistisuite.api.WebWalker.wrappers.RSTile;
 import net.runelite.client.plugins.paistisuite.api.types.Filters;
 import net.runelite.client.plugins.paistisuite.api.types.PItem;
@@ -57,7 +59,10 @@ public class ProcessItemState extends State<BodFishingPlugin>
 				{
 					if (plugin.bankCookedFishChoice)
 					{
-						//TODO: COOK;
+						cookFish();
+						if (isCooking) {
+							return;
+						}
 						dropItems(Filters.Items.nameContains("Burnt"));
 					}
 
@@ -68,9 +73,11 @@ public class ProcessItemState extends State<BodFishingPlugin>
 				else
 				{
 					if (plugin.cookedFishChoice) {
-						// TODO: COOK
+						cookFish();
 					}
-
+					if (isCooking) {
+						return;
+					}
 					dropItems(Filters.Items.nameContains("Trout", "Salmon"));
 				}
 				break;
@@ -151,7 +158,22 @@ public class ProcessItemState extends State<BodFishingPlugin>
 		}
 
 		PTileObject fire = PObjects.findObject(Filters.Objects.idEquals(ObjectID.FIRE_26185));
+		if (fire != null) {
+			PItem trout = PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_TROUT));
+			if (trout != null && !isCooking) {
+				isCooking = true;
+				PInteraction.useItemOnGameObject(trout, fire);
+				Keyboard.pressSpacebar();
+				isCooking = !PUtils.waitCondition(15000, () -> PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_TROUT)) != null);
+			}
 
+			PItem salmon = PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_SALMON));
+			if (salmon != null && !isCooking) {
+				isCooking = true;
+				PInteraction.useItemOnGameObject(salmon, fire);
+				Keyboard.pressSpacebar();
+				isCooking = !PUtils.waitCondition(15000, () -> PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_SALMON)) != null);
+			}
+		}
 	}
-
 }
