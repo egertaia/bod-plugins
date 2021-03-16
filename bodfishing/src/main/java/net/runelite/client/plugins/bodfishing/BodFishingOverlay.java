@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.time.Duration;
 import java.time.Instant;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -31,6 +32,7 @@ class BodFishingOverlay extends OverlayPanel
 
 	String timeFormat;
 
+	@Inject
 	BodFishingOverlay(final Client client, final BodFishingPlugin plugin, final BodFishingConfig config)
 	{
 		super(plugin);
