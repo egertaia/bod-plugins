@@ -72,7 +72,7 @@ public interface BodFishingConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "cookedFishChoice",
+		keyName = "bankCookedFishChoice",
 		name = "Do you want them cooked?",
 		description = "Select whether you would like the fish to be cooked.",
 		hidden = true,
@@ -80,9 +80,23 @@ public interface BodFishingConfig extends Config
 		unhideValue = "true",
 		position = 5
 	)
-	default boolean cookedFishChoice()
+	default boolean bankCookedFishChoice()
 	{
 		return false;
+	}
+
+	@ConfigItem(
+		keyName = "cookedFishChoice",
+		name = "Do you want to cook fish before dropping?",
+		description = "Select whether you would like the fish to be cooked before dropping.",
+		hidden = true,
+		unhide = "bankFishChoice",
+		unhideValue = "false",
+		position = 6
+	)
+	default boolean cookedFishChoice()
+	{
+		return true;
 	}
 
 
@@ -90,7 +104,7 @@ public interface BodFishingConfig extends Config
 		keyName = "dropClueScrolls",
 		name = "Drop clues?",
 		description = "Enable dropping of clues",
-		position = 6
+		position = 7
 	)
 	default boolean dropClueScrolls()
 	{

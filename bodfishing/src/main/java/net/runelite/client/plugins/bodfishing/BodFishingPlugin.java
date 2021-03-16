@@ -2,21 +2,18 @@ package net.runelite.client.plugins.bodfishing;
 
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import java.time.Duration;
 import java.time.Instant;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
-import net.runelite.api.Skill;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ConfigButtonClicked;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
-import net.runelite.client.events.XpDropEvent;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.bodfishing.enums.FishingChoice;
@@ -25,6 +22,7 @@ import net.runelite.client.plugins.bodfishing.states.FishingState;
 import net.runelite.client.plugins.bodfishing.states.ProcessItemState;
 import net.runelite.client.plugins.bodfishing.states.State;
 import net.runelite.client.plugins.bodfishing.states.StateSet;
+import net.runelite.client.plugins.bodfishing.states.WalkToFishingState;
 import net.runelite.client.plugins.paistisuite.PScript;
 import net.runelite.client.plugins.paistisuite.PaistiSuite;
 import net.runelite.client.plugins.paistisuite.api.PPlayer;
@@ -53,12 +51,14 @@ public class BodFishingPlugin extends PScript
 	public TickManipulation tickManipulation = TickManipulation.TEAK_KNIFE;
 	public FishingChoice fishingChoice = FishingChoice.BARBARIAN_OUTPOST;
 	public boolean bankFishChoice = false;
+	public boolean bankCookedFishChoice = false;
 	public boolean cookedFishChoice = false;
 	public boolean dropClueScrolls = false;
 
 	private StateSet<BodFishingPlugin> states = new StateSet<>();
 	State<BodFishingPlugin> currentState;
 
+	public WalkToFishingState walkToFishingState = new WalkToFishingState(this);
 	public FishingState fishingState = new FishingState(this);
 	public ProcessItemState processItemState = new ProcessItemState(this);
 
@@ -114,6 +114,7 @@ public class BodFishingPlugin extends PScript
 		tickManipulation = config.tickManipulationChoice();
 		fishingChoice = config.fishingChoice();
 		bankFishChoice = config.bankFishChoice();
+		bankCookedFishChoice = config.bankCookedFishChoice();
 		dropClueScrolls = config.dropClueScrolls();
 		cookedFishChoice = config.cookedFishChoice();
 	}
@@ -122,6 +123,7 @@ public class BodFishingPlugin extends PScript
 	{
 		states.clear();
 		states.addAll(
+			this.walkToFishingState,
 			this.processItemState,
 			this.fishingState
 		);
