@@ -53,6 +53,7 @@ public class BodFishingPlugin extends PScript
 	public TickManipulation tickManipulation = TickManipulation.TEAK_KNIFE;
 	public FishingChoice fishingChoice = FishingChoice.BARBARIAN_OUTPOST;
 	public boolean bankFishChoice = false;
+	public boolean cookedFishChoice = false;
 	public boolean dropClueScrolls = false;
 
 	private StateSet<BodFishingPlugin> states = new StateSet<>();
@@ -114,6 +115,7 @@ public class BodFishingPlugin extends PScript
 		fishingChoice = config.fishingChoice();
 		bankFishChoice = config.bankFishChoice();
 		dropClueScrolls = config.dropClueScrolls();
+		cookedFishChoice = config.cookedFishChoice();
 	}
 
 	private synchronized void loadStates()

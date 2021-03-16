@@ -59,8 +59,8 @@ public interface BodFishingConfig extends Config
 
 	@ConfigItem(
 		keyName = "bankFishChoice",
-		name = "Bank raw fish?",
-		description = "Select whether you would like to bank raw fish. This as a false, means it will process food right away.",
+		name = "Bank fish?",
+		description = "Select whether you would like to bank fish.",
 		hidden = true,
 		unhide = "fishingChoice",
 		unhideValue = "Barbarian Village",
@@ -72,10 +72,25 @@ public interface BodFishingConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "cookedFishChoice",
+		name = "Do you want them cooked?",
+		description = "Select whether you would like the fish to be cooked.",
+		hidden = true,
+		unhide = "bankFishChoice",
+		unhideValue = "true",
+		position = 5
+	)
+	default boolean cookedFishChoice()
+	{
+		return false;
+	}
+
+
+	@ConfigItem(
 		keyName = "dropClueScrolls",
 		name = "Drop clues?",
 		description = "Enable dropping of clues",
-		position = 5
+		position = 6
 	)
 	default boolean dropClueScrolls()
 	{
