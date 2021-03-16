@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.AnimationID;
 import net.runelite.api.NPC;
 import net.runelite.api.events.AnimationChanged;
-import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.bodfishing.BodFishingPlugin;
 import net.runelite.client.plugins.bodfishing.enums.FishingChoice;
 import net.runelite.client.plugins.paistisuite.api.PInteraction;
@@ -35,7 +34,6 @@ public class FishingState extends State<BodFishingPlugin>
 	@Override
 	public void onAnimationChanged(AnimationChanged event)
 	{
-		log.info("on anim change @ fishstate");
 		if (isFishActionFinished())
 		{
 			return;
@@ -47,7 +45,7 @@ public class FishingState extends State<BodFishingPlugin>
 			{
 				tickManipulationThread.submit(() ->
 				{
-					PUtils.sleepNormal(650, 800);
+					PUtils.sleepNormal(250, 450);
 					if (plugin.fishingChoice == FishingChoice.BARBARIAN_OUTPOST)
 					{
 						PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping "));

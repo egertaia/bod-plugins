@@ -45,6 +45,7 @@ import org.pf4j.Extension;
 @Singleton
 public class BodFishingPlugin extends PScript
 {
+	public boolean startScript = false;
 	public Instant startedTimestamp;
 	public boolean enableTickManipulation = false;
 	public TickManipulation tickManipulation = TickManipulation.TEAK_KNIFE;
@@ -164,16 +165,19 @@ public class BodFishingPlugin extends PScript
 			try
 			{
 				super.start();
+				startScript = true;
 			}
 			catch (Exception e)
 			{
 				log.error(e.toString());
 				e.printStackTrace();
+				startScript = false;
 			}
 		}
 		else if (configButtonClicked.getKey().equals("stopButton"))
 		{
 			requestStop();
+			startScript = false;
 		}
 
 	}
@@ -181,7 +185,7 @@ public class BodFishingPlugin extends PScript
 	@Subscribe
 	private synchronized void onXpDropEvent(XpDropEvent event)
 	{
-		if (event.getSkill() == Skill.FISHING)
+		if (event.getSkill() == Skill.FISHING && startScript)
 		{
 			//TODO: Fix this, it gives triple the fish rn.
 			caughtFish++;
@@ -193,6 +197,11 @@ public class BodFishingPlugin extends PScript
 	protected void loop()
 	{
 		PUtils.sleepFlat(50, 150);
+		if (!startScript)
+		{
+			return;
+		}
+
 		if (PUtils.getClient().getGameState() != GameState.LOGGED_IN)
 		{
 			return;
@@ -207,7 +216,8 @@ public class BodFishingPlugin extends PScript
 
 	public long getPerHour(int quantity)
 	{
-		if (startedTimestamp != null) {
+		if (startedTimestamp != null && startScript)
+		{
 			Duration timeSinceStart = Duration.between(startedTimestamp, Instant.now());
 			if (!timeSinceStart.isZero())
 			{
@@ -220,18 +230,21 @@ public class BodFishingPlugin extends PScript
 	@Subscribe
 	protected void onAnimationChanged(AnimationChanged event)
 	{
+		if (!startScript)
+		{
+			return;
+		}
 		if (!event.getActor().equals(PPlayer.get()))
 		{
 			return;
 		}
-		updateState();
-		if (currentState != null) {
-			currentState.onAnimationChanged(event);
-			log.info("on anim change @ main");
-		}
+
+		states.eachEvent(event);
+
 	}
 
-	private void updateState() {
+	private void updateState()
+	{
 		currentState = states.getValidState();
 		if (currentState != null)
 		{

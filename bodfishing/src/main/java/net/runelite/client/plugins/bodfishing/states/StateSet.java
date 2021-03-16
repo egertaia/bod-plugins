@@ -3,6 +3,8 @@ package net.runelite.client.plugins.bodfishing.states;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+import net.runelite.api.events.AnimationChanged;
 
 public class StateSet<T>
 {
@@ -22,6 +24,10 @@ public class StateSet<T>
 	public void addAll(State<T>... states)
 	{
 		stateList.addAll(Arrays.asList(states));
+	}
+
+	public void eachEvent(AnimationChanged event) {
+		stateList.forEach(state -> state.onAnimationChanged(event));
 	}
 
 	public void clear()
