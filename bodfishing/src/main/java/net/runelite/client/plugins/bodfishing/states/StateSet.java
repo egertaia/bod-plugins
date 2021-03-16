@@ -26,7 +26,7 @@ public class StateSet<T>
 		stateList.addAll(Arrays.asList(states));
 	}
 
-	public void eachEvent(AnimationChanged event) {
+	public void eachAnimationEvent(AnimationChanged event) {
 		stateList.forEach(state -> state.onAnimationChanged(event));
 	}
 

@@ -14,6 +14,8 @@ import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.MenuAction;
+import net.runelite.api.Skill;
+import net.runelite.client.plugins.xptracker.XpTrackerService;
 import static net.runelite.client.ui.overlay.OverlayManager.OPTION_CONFIGURE;
 import net.runelite.client.ui.overlay.OverlayMenuEntry;
 import net.runelite.client.ui.overlay.OverlayPanel;
@@ -29,13 +31,15 @@ class BodFishingOverlay extends OverlayPanel
 	private final Client client;
 	private final BodFishingPlugin plugin;
 	private final BodFishingConfig config;
+	private final XpTrackerService xpTrackerService;
 
 	String timeFormat;
 
 	@Inject
-	BodFishingOverlay(final Client client, final BodFishingPlugin plugin, final BodFishingConfig config)
+	BodFishingOverlay(final Client client, final BodFishingPlugin plugin, final BodFishingConfig config, XpTrackerService xpTrackerService)
 	{
 		super(plugin);
+		this.xpTrackerService = xpTrackerService;
 		setPosition(OverlayPosition.BOTTOM_RIGHT);
 		this.client = client;
 		this.plugin = plugin;
@@ -46,7 +50,7 @@ class BodFishingOverlay extends OverlayPanel
 	@Override
 	public Dimension render(Graphics2D graphics)
 	{
-		if (plugin.startedTimestamp == null || !config.enableOverlay())
+		if (plugin.startedTimestamp == null || !config.enableOverlay() || !plugin.startScript)
 		{
 			return null;
 		}
@@ -60,7 +64,8 @@ class BodFishingOverlay extends OverlayPanel
 
 		// stats
 		TableComponent statsComponent = getTableComponent();
-		statsComponent.addRow("Caught:", plugin.caughtFish + " (" + plugin.caughtFishPerHour + "/hr)");
+		int actions = xpTrackerService.getActions(Skill.FISHING);
+		statsComponent.addRow("Caught:", actions + " (" + xpTrackerService.getActionsHr(Skill.FISHING) + "/hr)");
 
 		if (!statusComponent.isEmpty())
 		{

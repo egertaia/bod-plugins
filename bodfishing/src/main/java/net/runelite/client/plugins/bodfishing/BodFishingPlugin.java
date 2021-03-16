@@ -22,12 +22,14 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.bodfishing.enums.FishingChoice;
 import net.runelite.client.plugins.bodfishing.enums.TickManipulation;
 import net.runelite.client.plugins.bodfishing.states.FishingState;
+import net.runelite.client.plugins.bodfishing.states.ProcessItemState;
 import net.runelite.client.plugins.bodfishing.states.State;
 import net.runelite.client.plugins.bodfishing.states.StateSet;
 import net.runelite.client.plugins.paistisuite.PScript;
 import net.runelite.client.plugins.paistisuite.PaistiSuite;
 import net.runelite.client.plugins.paistisuite.api.PPlayer;
 import net.runelite.client.plugins.paistisuite.api.PUtils;
+import net.runelite.client.plugins.paistisuite.api.PWalking;
 import net.runelite.client.plugins.paistisuite.api.WebWalker.api_lib.DaxWalker;
 import net.runelite.client.ui.overlay.OverlayManager;
 import org.pf4j.Extension;
@@ -35,7 +37,7 @@ import org.pf4j.Extension;
 @Extension
 @PluginDependency(PaistiSuite.class)
 @PluginDescriptor(
-	name = "BodFishing",
+	name = "Bod AIO Fisherman",
 	enabledByDefault = false,
 	description = "Dadbod - AIO Fisher",
 	tags = {"banking", "items", "paisti", "dadbod", "fishing", "tick"}
@@ -51,13 +53,13 @@ public class BodFishingPlugin extends PScript
 	public TickManipulation tickManipulation = TickManipulation.TEAK_KNIFE;
 	public FishingChoice fishingChoice = FishingChoice.BARBARIAN_OUTPOST;
 	public boolean bankFishChoice = false;
-	public int caughtFish = 0;
-	public long caughtFishPerHour = 0;
+	public boolean dropClueScrolls = false;
 
 	private StateSet<BodFishingPlugin> states = new StateSet<>();
 	State<BodFishingPlugin> currentState;
 
 	public FishingState fishingState = new FishingState(this);
+	public ProcessItemState processItemState = new ProcessItemState(this);
 
 	@Getter
 	@Setter
@@ -92,6 +94,7 @@ public class BodFishingPlugin extends PScript
 	protected void shutDown()
 	{
 		requestStop();
+		startScript = false;
 		overlayManager.remove(overlay);
 	}
 
@@ -110,12 +113,14 @@ public class BodFishingPlugin extends PScript
 		tickManipulation = config.tickManipulationChoice();
 		fishingChoice = config.fishingChoice();
 		bankFishChoice = config.bankFishChoice();
+		dropClueScrolls = config.dropClueScrolls();
 	}
 
 	private synchronized void loadStates()
 	{
 		states.clear();
 		states.addAll(
+			this.processItemState,
 			this.fishingState
 		);
 	}
@@ -136,6 +141,7 @@ public class BodFishingPlugin extends PScript
 	{
 		PUtils.sendGameMessage("BodFishing stopped!");
 		startedTimestamp = null;
+		startScript = false;
 	}
 
 	@Subscribe
@@ -178,18 +184,9 @@ public class BodFishingPlugin extends PScript
 		{
 			requestStop();
 			startScript = false;
-		}
-
-	}
-
-	@Subscribe
-	private synchronized void onXpDropEvent(XpDropEvent event)
-	{
-		if (event.getSkill() == Skill.FISHING && startScript)
-		{
-			//TODO: Fix this, it gives triple the fish rn.
-			caughtFish++;
-			caughtFishPerHour = getPerHour(caughtFish);
+			if (enableTickManipulation) {
+				PWalking.sceneWalk(PPlayer.getWorldLocation());
+			}
 		}
 	}
 
@@ -197,50 +194,24 @@ public class BodFishingPlugin extends PScript
 	protected void loop()
 	{
 		PUtils.sleepFlat(50, 150);
-		if (!startScript)
+		if (playerNotReady())
 		{
 			return;
 		}
 
-		if (PUtils.getClient().getGameState() != GameState.LOGGED_IN)
-		{
-			return;
-		}
-		if (isStopRequested())
-		{
-			return;
-		}
 		updateState();
 		currentState.loop();
-	}
-
-	public long getPerHour(int quantity)
-	{
-		if (startedTimestamp != null && startScript)
-		{
-			Duration timeSinceStart = Duration.between(startedTimestamp, Instant.now());
-			if (!timeSinceStart.isZero())
-			{
-				return (int) ((double) quantity * (double) Duration.ofHours(1).toMillis() / (double) timeSinceStart.toMillis());
-			}
-		}
-		return 0;
 	}
 
 	@Subscribe
 	protected void onAnimationChanged(AnimationChanged event)
 	{
-		if (!startScript)
-		{
-			return;
-		}
-		if (!event.getActor().equals(PPlayer.get()))
+		if (playerNotReady())
 		{
 			return;
 		}
 
-		states.eachEvent(event);
-
+		states.eachAnimationEvent(event);
 	}
 
 	private void updateState()
@@ -254,6 +225,10 @@ public class BodFishingPlugin extends PScript
 		{
 			setStatus("?");
 		}
+	}
+
+	private boolean playerNotReady() {
+		return !startScript || PUtils.getClient().getGameState() != GameState.LOGGED_IN || isStopRequested();
 	}
 
 }

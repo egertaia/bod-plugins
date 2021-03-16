@@ -24,7 +24,7 @@ public interface BodFishingConfig extends Config
 	@ConfigItem(
 		keyName = "enableTickManipulation",
 		name = "Enable 3T",
-		description = "Enable 3t of fishing",
+		description = "Enable 3t fishing",
 		position = 1
 	)
 	default boolean enableTickManipulation()
@@ -69,6 +69,17 @@ public interface BodFishingConfig extends Config
 	default boolean bankFishChoice()
 	{
 		return false;
+	}
+
+	@ConfigItem(
+		keyName = "dropClueScrolls",
+		name = "Drop clues?",
+		description = "Enable dropping of clues",
+		position = 5
+	)
+	default boolean dropClueScrolls()
+	{
+		return true;
 	}
 
 	@ConfigItem(
