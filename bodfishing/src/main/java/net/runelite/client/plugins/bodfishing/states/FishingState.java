@@ -45,14 +45,6 @@ public class FishingState extends State<BodFishingPlugin>
 			{
 				tickManipulationThread.submit(() ->
 				{
-					PUtils.sleepNormal(250, 400);
-					if (plugin.fishingChoice == FishingChoice.BARBARIAN_OUTPOST)
-					{
-						PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping "));
-						PInteraction.item(dropFish, "Drop");
-						PUtils.sleepNormal(100, 200);
-					}
-
 					switch (plugin.tickManipulation)
 					{
 						case GUAM_TAR:
@@ -70,6 +62,13 @@ public class FishingState extends State<BodFishingPlugin>
 							{
 								PUtils.sendGameMessage("Unable to cut teak log");
 							}
+					}
+
+					PUtils.sleepNormal(150, 400);
+					if (plugin.fishingChoice == FishingChoice.BARBARIAN_OUTPOST)
+					{
+						PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping "));
+						PInteraction.item(dropFish, "Drop");
 					}
 
 					setFishActionFinished(true);
@@ -121,7 +120,7 @@ public class FishingState extends State<BodFishingPlugin>
 		}
 
 		setFishActionFinished(false);
-		PUtils.waitCondition((int) PUtils.randomNormal(800, 1800), this::isFishActionFinished);
+		PUtils.waitCondition((int) PUtils.randomNormal(1200, 2400), this::isFishActionFinished);
 		if (PPlayer.get().getAnimation() == AnimationID.IDLE || plugin.enableTickManipulation) {
 			setFishActionFinished(true);
 		}
@@ -133,9 +132,11 @@ public class FishingState extends State<BodFishingPlugin>
 			{
 				case GUAM_TAR:
 					PUtils.waitCondition((int) PUtils.randomNormal(1000, 1500), () -> PPlayer.get().getAnimation() == AnimationID.HERBLORE_MAKE_TAR);
+					setFishActionFinished(false);
 					break;
 				case TEAK_KNIFE:
 					PUtils.waitCondition((int) PUtils.randomNormal(1000, 1500), () -> PPlayer.get().getAnimation() == AnimationID.FLETCHING_BOW_CUTTING);
+					setFishActionFinished(false);
 					break;
 			}
 		}

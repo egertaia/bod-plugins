@@ -190,7 +190,9 @@ public class BodFishingPlugin extends PScript
 		{
 			requestStop();
 			startScript = false;
-			if (enableTickManipulation) {
+			if (enableTickManipulation)
+			{
+				PUtils.sleepNormal(400, 800);
 				PWalking.sceneWalk(PPlayer.getWorldLocation());
 			}
 		}
@@ -206,7 +208,8 @@ public class BodFishingPlugin extends PScript
 		}
 
 		updateState();
-		if (currentState != null) {
+		if (currentState != null)
+		{
 			currentState.loop();
 		}
 	}
@@ -214,6 +217,11 @@ public class BodFishingPlugin extends PScript
 	@Subscribe
 	protected void onAnimationChanged(AnimationChanged event)
 	{
+		if (!event.getActor().equals(PPlayer.getPlayer()))
+		{
+			return;
+		}
+
 		if (playerNotReady())
 		{
 			return;
@@ -235,7 +243,8 @@ public class BodFishingPlugin extends PScript
 		}
 	}
 
-	private boolean playerNotReady() {
+	private boolean playerNotReady()
+	{
 		return !startScript || PUtils.getClient().getGameState() != GameState.LOGGED_IN || isStopRequested();
 	}
 
