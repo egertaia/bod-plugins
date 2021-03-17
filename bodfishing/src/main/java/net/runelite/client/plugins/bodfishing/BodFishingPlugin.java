@@ -29,11 +29,13 @@ import net.runelite.client.plugins.paistisuite.api.PPlayer;
 import net.runelite.client.plugins.paistisuite.api.PUtils;
 import net.runelite.client.plugins.paistisuite.api.PWalking;
 import net.runelite.client.plugins.paistisuite.api.WebWalker.api_lib.DaxWalker;
+import net.runelite.client.plugins.xptracker.XpTrackerPlugin;
 import net.runelite.client.ui.overlay.OverlayManager;
 import org.pf4j.Extension;
 
 @Extension
 @PluginDependency(PaistiSuite.class)
+@PluginDependency(XpTrackerPlugin.class)
 @PluginDescriptor(
 	name = "Bod AIO Fisherman",
 	enabledByDefault = false,

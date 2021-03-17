@@ -1,7 +1,7 @@
 
-version = "0.0.1"
+version = "0.0.2"
 
-project.extra["PluginName"] = "Bod Fishing"
+project.extra["PluginName"] = "Bod Fishing AIO"
 project.extra["PluginDescription"] = "Bod Fishing AIO"
 
 dependencies {
