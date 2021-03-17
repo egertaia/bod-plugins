@@ -112,7 +112,7 @@ public class ProcessItemState extends State<BodFishingPlugin>
 			items.forEach(item ->
 			{
 				PInteraction.item(item, "Drop");
-				PUtils.sleepNormal(200, 600);
+				PUtils.sleepNormal(200, 400);
 			});
 
 			isDropping = false;

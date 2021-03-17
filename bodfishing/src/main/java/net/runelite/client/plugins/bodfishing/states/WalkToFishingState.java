@@ -8,6 +8,7 @@ import net.runelite.client.plugins.bodfishing.BodFishingPlugin;
 import net.runelite.client.plugins.paistisuite.api.PPlayer;
 import net.runelite.client.plugins.paistisuite.api.PUtils;
 import net.runelite.client.plugins.paistisuite.api.PWalking;
+import net.runelite.client.plugins.paistisuite.api.WebWalker.WalkingCondition;
 import net.runelite.client.plugins.paistisuite.api.WebWalker.api_lib.DaxWalker;
 import net.runelite.client.plugins.paistisuite.api.WebWalker.wrappers.RSTile;
 
@@ -41,10 +42,20 @@ public class WalkToFishingState extends State<BodFishingPlugin>
 	{
 		WorldPoint targetLocation = getTarget();
 
-		if (!PPlayer.isMoving()) {
-			if (targetLocation.isInScene(PUtils.getClient()) && PWalking.sceneWalk(targetLocation)) {
+		if (!PPlayer.isMoving())
+		{
+			if (targetLocation.isInScene(PUtils.getClient()) && PWalking.sceneWalk(targetLocation))
+			{
 				PUtils.sleepNormal(650, 1500);
-			} else if (!DaxWalker.walkTo(new RSTile(targetLocation))) {
+			}
+			else if (!DaxWalker.walkTo(new RSTile(targetLocation), () -> {
+				if (plugin.isStopRequested())
+				{
+					return WalkingCondition.State.EXIT_OUT_WALKER_FAIL;
+				}
+				return WalkingCondition.State.CONTINUE_WALKER;
+			}))
+			{
 				log.info("Unable to move to " + plugin.fishingChoice.name);
 				PUtils.sendGameMessage("Unable to move to " + plugin.fishingChoice.name);
 				PUtils.sleepNormal(650, 1500);
@@ -58,8 +69,10 @@ public class WalkToFishingState extends State<BodFishingPlugin>
 	{
 	}
 
-	private WorldPoint getTarget() {
-		switch (plugin.fishingChoice) {
+	private WorldPoint getTarget()
+	{
+		switch (plugin.fishingChoice)
+		{
 			case BARBARIAN_OUTPOST:
 				return barbarianOutpostLocation;
 			case BARBARIAN_VILLAGE:

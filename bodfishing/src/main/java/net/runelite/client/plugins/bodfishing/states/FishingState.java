@@ -45,7 +45,7 @@ public class FishingState extends State<BodFishingPlugin>
 			{
 				tickManipulationThread.submit(() ->
 				{
-					PUtils.sleepNormal(250, 450);
+					PUtils.sleepNormal(150, 350);
 					if (plugin.fishingChoice == FishingChoice.BARBARIAN_OUTPOST)
 					{
 						PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping "));
@@ -121,7 +121,7 @@ public class FishingState extends State<BodFishingPlugin>
 		}
 
 		setFishActionFinished(false);
-		PUtils.waitCondition((int) PUtils.randomNormal(3600, 5000), this::isFishActionFinished);
+		PUtils.waitCondition((int) PUtils.randomNormal(1200, 2400), this::isFishActionFinished);
 		if (PPlayer.get().getAnimation() == AnimationID.IDLE || plugin.enableTickManipulation) {
 			setFishActionFinished(true);
 		}
