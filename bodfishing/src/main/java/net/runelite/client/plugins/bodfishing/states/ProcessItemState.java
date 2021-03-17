@@ -30,6 +30,7 @@ public class ProcessItemState extends State<BodFishingPlugin>
 	public ProcessItemState(BodFishingPlugin plugin)
 	{
 		super(plugin);
+		this.plugin = plugin;
 	}
 
 	@Override
@@ -111,7 +112,7 @@ public class ProcessItemState extends State<BodFishingPlugin>
 			items.forEach(item ->
 			{
 				PInteraction.item(item, "Drop");
-				PUtils.sleepNormal(100, 200);
+				PUtils.sleepNormal(200, 600);
 			});
 
 			isDropping = false;

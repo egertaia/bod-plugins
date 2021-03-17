@@ -206,7 +206,9 @@ public class BodFishingPlugin extends PScript
 		}
 
 		updateState();
-		currentState.loop();
+		if (currentState != null) {
+			currentState.loop();
+		}
 	}
 
 	@Subscribe

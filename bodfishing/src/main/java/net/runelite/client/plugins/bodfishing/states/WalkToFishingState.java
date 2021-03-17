@@ -16,18 +16,18 @@ public class WalkToFishingState extends State<BodFishingPlugin>
 {
 	BodFishingPlugin plugin;
 	WorldPoint barbarianVillageLocation = new WorldPoint(3105, 3433, 0);
-	WorldPoint barbarianOutpostLocation = new WorldPoint(2498, 3510, 0);
+	WorldPoint barbarianOutpostLocation = new WorldPoint(2498, 3507, 0);
 
 	public WalkToFishingState(BodFishingPlugin plugin)
 	{
 		super(plugin);
+		this.plugin = plugin;
 	}
 
 	@Override
 	public boolean condition()
 	{
-		Client client = PUtils.getClient();
-		return barbarianVillageLocation.isInScene(client) || barbarianOutpostLocation.isInScene(client);
+		return getTarget().distanceTo(PPlayer.getWorldLocation()) > 20;
 	}
 
 	@Override
@@ -39,15 +39,7 @@ public class WalkToFishingState extends State<BodFishingPlugin>
 	@Override
 	public void loop()
 	{
-		WorldPoint targetLocation = null;
-		switch (plugin.fishingChoice) {
-			case BARBARIAN_OUTPOST:
-				targetLocation = barbarianOutpostLocation;
-				break;
-			case BARBARIAN_VILLAGE:
-				targetLocation = barbarianVillageLocation;
-				break;
-		}
+		WorldPoint targetLocation = getTarget();
 
 		if (!PPlayer.isMoving()) {
 			if (targetLocation.isInScene(PUtils.getClient()) && PWalking.sceneWalk(targetLocation)) {
@@ -65,4 +57,16 @@ public class WalkToFishingState extends State<BodFishingPlugin>
 	public void onAnimationChanged(AnimationChanged event)
 	{
 	}
+
+	private WorldPoint getTarget() {
+		switch (plugin.fishingChoice) {
+			case BARBARIAN_OUTPOST:
+				return barbarianOutpostLocation;
+			case BARBARIAN_VILLAGE:
+				return barbarianVillageLocation;
+			default:
+				return null;
+		}
+	}
+
 }
