@@ -25,12 +25,7 @@
 
 rootProject.name = "Dadbod Plugins"
 
-include(":bodbreakhandler")
-include(":bodutils")
-include(":bodmenudebugger")
-
-include(":bodbarbarian")
-include(":bodvonblessed")
+include(":bodfishing")
 
 //BOD GENERATOR
 

@@ -1,11 +1,17 @@
-# Dadbod Plugins
+# Bod Plugins
 
 External plugins for OpenOSRS that focus on automation, this is a seperate entity, not OpenOSRS.
 
 The purpose of this repository is primarily for my own learning but also to provide open-source examples of automation using plugins. 
 
 # Use
-You will need to add my repository.
+You will need to add Paisti's repository in addition to mine.
+You will most likely need to install PaistiSuite before any of my plugins.
+BodUtils will be deprecated, together with BodBreakManager as I've started using PaistiSuite as a base.
+
+**Github Repository owner:** marsunpaisti
+
+**Github Repository name:** plugins-release
 
 **Github Repository owner:** egertaia
 
@@ -13,10 +19,6 @@ You will need to add my repository.
 
 # Credits
 
-The majority of functionality is available thanks to Ganom's ExtUtils. He makes great plugins and has been very generous with open-sourcing. Support him by subscribing to his patreon @https://www.patreon.com/ganom and checking out his repo: https://github.com/Ganom/ExternalPlugin
+The majority of functionality is available thanks to Marsunpaisti, which used some of Illumine utils as a base.
 
-Break handler is courtsey of Owain94
-
-Utils are courtesy of illumineawake
-
-Additional credit to the likes of: Owain94, Tom C, kyle, swaz and many others!.
+Additional credit to the likes of: Owain94, Tom C, kyle, swaz, illumineawake and many others!.
