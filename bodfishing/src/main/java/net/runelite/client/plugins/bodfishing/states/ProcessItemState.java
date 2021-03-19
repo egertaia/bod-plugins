@@ -160,7 +160,7 @@ public class ProcessItemState extends State<BodFishingPlugin>
 			PItem trout = PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_TROUT));
 			if (trout != null && !isCooking) {
 				isCooking = true;
-				PInteraction.useItemOnGameObject(trout, fire);
+				PInteraction.useItemOnTileObject(trout, fire);
 				Keyboard.pressSpacebar();
 				isCooking = !PUtils.waitCondition(15000, () -> PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_TROUT)) != null);
 			}
@@ -168,7 +168,7 @@ public class ProcessItemState extends State<BodFishingPlugin>
 			PItem salmon = PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_SALMON));
 			if (salmon != null && !isCooking) {
 				isCooking = true;
-				PInteraction.useItemOnGameObject(salmon, fire);
+				PInteraction.useItemOnTileObject(salmon, fire);
 				Keyboard.pressSpacebar();
 				isCooking = !PUtils.waitCondition(15000, () -> PInventory.findItem(Filters.Items.idEquals(ItemID.RAW_SALMON)) != null);
 			}
