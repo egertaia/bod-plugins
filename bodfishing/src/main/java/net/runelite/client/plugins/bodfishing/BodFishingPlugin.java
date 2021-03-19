@@ -57,6 +57,15 @@ public class BodFishingPlugin extends PScript
 	public boolean cookedFishChoice = false;
 	public boolean dropClueScrolls = false;
 
+	public int minSleepBeforeNewSpot;
+	public int maxSleepBeforeNewSpot;
+	public int minSleepBefore3t;
+	public int maxSleepBefore3t;
+	public int minSleepBeforeDrop;
+	public int maxSleepBeforeDrop;
+	public int minSleepBeforeFish;
+	public int maxSleepBeforeFish;
+
 	private StateSet<BodFishingPlugin> states = new StateSet<>();
 	State<BodFishingPlugin> currentState;
 
@@ -119,6 +128,15 @@ public class BodFishingPlugin extends PScript
 		bankCookedFishChoice = config.bankCookedFishChoice();
 		dropClueScrolls = config.dropClueScrolls();
 		cookedFishChoice = config.cookedFishChoice();
+
+		minSleepBeforeNewSpot = config.minSleepBeforeNewSpot();
+		maxSleepBeforeNewSpot = config.maxSleepBeforeNewSpot();
+		minSleepBefore3t = config.minSleepBefore3t();
+		maxSleepBefore3t = config.maxSleepBefore3t();
+		minSleepBeforeDrop = config.minSleepBeforeDrop();
+		maxSleepBeforeDrop = config.maxSleepBeforeDrop();
+		minSleepBeforeFish = config.minSleepBeforeFish();
+		maxSleepBeforeFish = config.maxSleepBeforeFish();
 	}
 
 	private synchronized void loadStates()

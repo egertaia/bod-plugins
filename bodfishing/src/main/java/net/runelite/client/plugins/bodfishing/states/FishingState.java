@@ -58,7 +58,8 @@ public class FishingState extends State<BodFishingPlugin>
 		{
 			if (!plugin.enableTickManipulation)
 			{
-				PUtils.sleepNormal(1800, 2400);
+				// defaults to 1800 - 2400;
+				PUtils.sleepNormal(plugin.minSleepBeforeNewSpot, plugin.maxSleepBeforeNewSpot);
 			}
 
 			String actionName = "";
@@ -83,7 +84,8 @@ public class FishingState extends State<BodFishingPlugin>
 		if (plugin.enableTickManipulation)
 		{
 			PUtils.waitCondition(1500, () -> isFishingAnimation());
-			PUtils.sleepNormal(650, 800);
+			// defaults to 650 - 800
+			PUtils.sleepNormal(plugin.minSleepBefore3t, plugin.maxSleepBefore3t);
 			switch (plugin.tickManipulation)
 			{
 				case GUAM_TAR:
@@ -103,20 +105,23 @@ public class FishingState extends State<BodFishingPlugin>
 					}
 			}
 
-			PUtils.sleepNormal(200, 400);
+			// defaults to 200 - 400
+			PUtils.sleepNormal(plugin.minSleepBeforeDrop, plugin.maxSleepBeforeDrop);
 			if (plugin.fishingChoice == FishingChoice.BARBARIAN_OUTPOST)
 			{
 				PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping "));
 				PInteraction.item(dropFish, "Drop");
 			}
 
-			PUtils.sleepNormal(700, 800);
+			// defaults to 700 - 800
+			PUtils.sleepNormal(plugin.minSleepBeforeFish, plugin.maxSleepBeforeFish);
 
 		}
 
 	}
 
-	private boolean isFishingAnimation() {
+	private boolean isFishingAnimation()
+	{
 		return PPlayer.get().getAnimation() == AnimationID.FISHING_POLE_CAST || PPlayer.get().getAnimation() == 622;
 	}
 }
