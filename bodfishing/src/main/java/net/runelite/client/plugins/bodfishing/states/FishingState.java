@@ -118,6 +118,10 @@ public class FishingState extends State<BodFishingPlugin>
 
 	private boolean isFishingAnimation()
 	{
-		return PPlayer.get().getAnimation() == 622;
+		if (plugin.enableTickManipulation)
+		{
+			return PPlayer.get().getAnimation() == 622;
+		}
+		return PPlayer.get().getAnimation() == AnimationID.FISHING_POLE_CAST;
 	}
 }
