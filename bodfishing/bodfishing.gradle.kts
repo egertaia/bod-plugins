@@ -1,5 +1,5 @@
 
-version = "0.1.1"
+version = "0.1.2"
 
 project.extra["PluginName"] = "Bod Fishing AIO"
 project.extra["PluginDescription"] = "Bod Fishing AIO"

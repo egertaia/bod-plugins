@@ -63,8 +63,6 @@ public class BodFishingPlugin extends PScript
 	public int maxSleepBefore3t;
 	public int minSleepBeforeDrop;
 	public int maxSleepBeforeDrop;
-	public int minSleepBeforeFish;
-	public int maxSleepBeforeFish;
 
 	private StateSet<BodFishingPlugin> states = new StateSet<>();
 	State<BodFishingPlugin> currentState;
@@ -135,8 +133,6 @@ public class BodFishingPlugin extends PScript
 		maxSleepBefore3t = config.maxSleepBefore3t();
 		minSleepBeforeDrop = config.minSleepBeforeDrop();
 		maxSleepBeforeDrop = config.maxSleepBeforeDrop();
-		minSleepBeforeFish = config.minSleepBeforeFish();
-		maxSleepBeforeFish = config.maxSleepBeforeFish();
 	}
 
 	private synchronized void loadStates()

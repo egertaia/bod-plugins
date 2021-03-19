@@ -83,7 +83,7 @@ public class FishingState extends State<BodFishingPlugin>
 
 		if (plugin.enableTickManipulation)
 		{
-			PUtils.waitCondition(1500, () -> isFishingAnimation());
+			PUtils.waitCondition(7500, () -> isFishingAnimation());
 			// defaults to 650 - 800
 			PUtils.sleepNormal(plugin.minSleepBefore3t, plugin.maxSleepBefore3t);
 			switch (plugin.tickManipulation)
@@ -112,16 +112,12 @@ public class FishingState extends State<BodFishingPlugin>
 				PItem dropFish = PInventory.findItem(Filters.Items.nameContains("Leaping "));
 				PInteraction.item(dropFish, "Drop");
 			}
-
-			// defaults to 700 - 800
-			PUtils.sleepNormal(plugin.minSleepBeforeFish, plugin.maxSleepBeforeFish);
-
 		}
 
 	}
 
 	private boolean isFishingAnimation()
 	{
-		return PPlayer.get().getAnimation() == AnimationID.FISHING_POLE_CAST || PPlayer.get().getAnimation() == 622;
+		return PPlayer.get().getAnimation() == 622;
 	}
 }

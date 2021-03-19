@@ -127,9 +127,8 @@ public interface BodFishingConfig extends Config
 		description = "Minimum sleep before going to new spot",
 		position = 51,
 		section = "delayConfig",
-		hidden = true,
-		unhide = "enableTickManipulation",
-		unhideValue = "false"
+		hide = "enableTickManipulation",
+		unhideValue = "true"
 	)
 	default int minSleepBeforeNewSpot()
 	{
@@ -142,9 +141,8 @@ public interface BodFishingConfig extends Config
 		description = "Maximum sleep before going to new spot",
 		position = 52,
 		section = "delayConfig",
-		hidden = true,
-		unhide = "enableTickManipulation",
-		unhideValue = "false"
+		hide = "enableTickManipulation",
+		unhideValue = "true"
 	)
 	default int maxSleepBeforeNewSpot()
 	{
@@ -209,36 +207,6 @@ public interface BodFishingConfig extends Config
 	default int maxSleepBeforeDrop()
 	{
 		return 400;
-	}
-
-	@ConfigItem(
-		keyName = "minSleepBeforeFish",
-		name = "Before fish min",
-		description = "Minimum sleep before starting fishing anim",
-		position = 57,
-		section = "delayConfig",
-		hidden = true,
-		unhide = "enableTickManipulation",
-		unhideValue = "true"
-	)
-	default int minSleepBeforeFish()
-	{
-		return 700;
-	}
-
-	@ConfigItem(
-		keyName = "maxSleepBeforeFish",
-		name = "Before fish max",
-		description = "Maximum sleep before starting fishing anim",
-		position = 58,
-		section = "delayConfig",
-		hidden = true,
-		unhide = "enableTickManipulation",
-		unhideValue = "true"
-	)
-	default int maxSleepBeforeFish()
-	{
-		return 800;
 	}
 
 	@ConfigItem(
