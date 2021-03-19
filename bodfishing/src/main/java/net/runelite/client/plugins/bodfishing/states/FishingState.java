@@ -72,13 +72,18 @@ public class FishingState extends State<BodFishingPlugin>
 					actionName = "Lure";
 					break;
 			}
+
+
 			NPC fishingSpot = PObjects.findNPC(Filters.NPCs.actionsContains(actionName)
 				.and(n -> n.getWorldLocation().distanceTo2D(PPlayer.getWorldLocation()) < 20));
 
-			if (!PInteraction.npc(fishingSpot, actionName))
-			{
-				PUtils.sendGameMessage("Unable to find fishing spot");
+			if (!isFishingAnimation()) {
+				if (!PInteraction.npc(fishingSpot, actionName))
+				{
+					PUtils.sendGameMessage("Unable to find fishing spot");
+				}
 			}
+
 		}
 
 		if (plugin.enableTickManipulation)
@@ -122,6 +127,6 @@ public class FishingState extends State<BodFishingPlugin>
 		{
 			return PPlayer.get().getAnimation() == 622;
 		}
-		return PPlayer.get().getAnimation() == AnimationID.FISHING_POLE_CAST;
+		return PPlayer.get().getAnimation() == AnimationID.FISHING_POLE_CAST || PPlayer.get().getAnimation() == 622;
 	}
 }

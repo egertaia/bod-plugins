@@ -172,6 +172,8 @@ public class BodFishingPlugin extends PScript
 			return;
 		}
 		readConfig();
+		PUtils.sleepNormal(400, 800);
+		PWalking.sceneWalk(PPlayer.getWorldLocation());
 	}
 
 	@Subscribe
