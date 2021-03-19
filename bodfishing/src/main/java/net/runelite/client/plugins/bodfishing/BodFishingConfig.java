@@ -116,7 +116,8 @@ public interface BodFishingConfig extends Config
 		keyName = "delayConfig",
 		name = "Sleep Delay Configuration",
 		description = "Configure how the bot handles sleep delays. This is for debug only.",
-		position = 50
+		position = 50,
+		closedByDefault = true
 	)
 	String delayConfig = "delayConfig";
 
@@ -239,7 +240,6 @@ public interface BodFishingConfig extends Config
 	{
 		return 800;
 	}
-
 
 	@ConfigItem(
 		keyName = "startButton",
