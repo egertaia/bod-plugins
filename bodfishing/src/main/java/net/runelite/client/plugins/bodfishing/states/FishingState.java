@@ -54,7 +54,7 @@ public class FishingState extends State<BodFishingPlugin>
 			return;
 		}
 
-		if (!isFishingAnimation() && !PPlayer.isMoving())
+		if (!isFishingAnimation())
 		{
 			if (!plugin.enableTickManipulation)
 			{
