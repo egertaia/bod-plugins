@@ -4,6 +4,7 @@ import net.runelite.client.config.Button;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.ConfigSection;
 import net.runelite.client.plugins.bodfishing.enums.FishingChoice;
 import net.runelite.client.plugins.bodfishing.enums.TickManipulation;
 
@@ -109,6 +110,135 @@ public interface BodFishingConfig extends Config
 	default boolean dropClueScrolls()
 	{
 		return true;
+	}
+
+	@ConfigSection(
+		keyName = "delayConfig",
+		name = "Sleep Delay Configuration",
+		description = "Configure how the bot handles sleep delays. This is for debug only.",
+		position = 50,
+		closedByDefault = true
+	)
+	String delayConfig = "delayConfig";
+
+	@ConfigItem(
+		keyName = "minSleepBeforeNewSpot",
+		name = "New spot MIN",
+		description = "Minimum sleep before going to new spot",
+		position = 51,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "false"
+	)
+	default int minSleepBeforeNewSpot()
+	{
+		return 1800;
+	}
+
+	@ConfigItem(
+		keyName = "maxSleepBeforeNewSpot",
+		name = "New spot MAX",
+		description = "Maximum sleep before going to new spot",
+		position = 52,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "false"
+	)
+	default int maxSleepBeforeNewSpot()
+	{
+		return 2400;
+	}
+
+	@ConfigItem(
+		keyName = "minSleepBefore3t",
+		name = "Before 3t min",
+		description = "Minimum sleep before starting 3t anim",
+		position = 53,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "true"
+	)
+	default int minSleepBefore3t()
+	{
+		return 650;
+	}
+
+	@ConfigItem(
+		keyName = "maxSleepBefore3t",
+		name = "Before 3t max",
+		description = "Maximum sleep before starting 3t anim",
+		position = 54,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "true"
+	)
+	default int maxSleepBefore3t()
+	{
+		return 800;
+	}
+
+	@ConfigItem(
+		keyName = "minSleepBeforeDrop",
+		name = "Before drop min",
+		description = "Minimum sleep before dropping fish",
+		position = 55,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "true"
+	)
+	default int minSleepBeforeDrop()
+	{
+		return 200;
+	}
+
+	@ConfigItem(
+		keyName = "maxSleepBeforeDrop",
+		name = "Before drop max",
+		description = "Maximum sleep before dropping fish",
+		position = 56,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "true"
+	)
+	default int maxSleepBeforeDrop()
+	{
+		return 400;
+	}
+
+	@ConfigItem(
+		keyName = "minSleepBeforeFish",
+		name = "Before fish min",
+		description = "Minimum sleep before starting fishing anim",
+		position = 57,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "true"
+	)
+	default int minSleepBeforeFish()
+	{
+		return 700;
+	}
+
+	@ConfigItem(
+		keyName = "maxSleepBeforeFish",
+		name = "Before fish max",
+		description = "Maximum sleep before starting fishing anim",
+		position = 58,
+		section = "delayConfig",
+		hidden = true,
+		unhide = "enableTickManipulation",
+		unhideValue = "true"
+	)
+	default int maxSleepBeforeFish()
+	{
+		return 800;
 	}
 
 	@ConfigItem(
